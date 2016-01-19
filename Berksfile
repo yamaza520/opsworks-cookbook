@@ -1,5 +1,5 @@
-#source "https://supermarket.chef.io"
-site :opscode
+source "https://supermarket.chef.io"
+#site :opscode
 
 # default opsworks cookbook
 #cookbook 'mysql'
