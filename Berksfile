@@ -5,5 +5,4 @@ cookbook 'mysql'
 cookbook 'nginx'
 
 # custom
-cookbook 'java'
 cookbook 'java8'

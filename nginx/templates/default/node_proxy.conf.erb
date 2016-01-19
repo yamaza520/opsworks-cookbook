@@ -1,0 +1,8 @@
+# HTTP --> HTTPS 処理
+# - ELB の HTTP(80) を、インスタンスの http_port に転送。
+# - インスタンスの http_port で受けたリクエストは、HTTPS にリダイレクト。
+server {
+    listen <%= node["nginx"]["node_proxy"]["http_port"] %>;
+    server_name  <%= node["nginx"]["node_proxy"]["hostname"] %>;
+    return 301 https://<%= node["nginx"]["node_proxy"]["hostname"] %>$request_uri;
+}
