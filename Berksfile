@@ -7,4 +7,3 @@ site :opscode
 
 # custom
 cookbook 'java'
-cookbook 'java8'
