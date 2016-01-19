@@ -2,8 +2,9 @@
 site :opscode
 
 # default opsworks cookbook
-cookbook 'mysql'
-cookbook 'nginx'
+#cookbook 'mysql'
+#cookbook 'nginx'
 
 # custom
+cookbook 'java'
 cookbook 'java8'
