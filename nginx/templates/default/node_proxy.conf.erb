@@ -1,8 +1,8 @@
-server {
-    upstream my-backend {
-        server 127.0.0.1:<%= node["nginx"]["play_proxy"]["play_port"] %>;
-    }
+upstream my-backend {
+    server 127.0.0.1:<%= node["nginx"]["play_proxy"]["play_port"] %>;
+}
 
+server {
     listen <%= node["nginx"]["play_proxy"]["http_port"] %>;
     server_name  <%= node["nginx"]["play_proxy"]["hostname"] %>;
     return 301 https://<%= node["nginx"]["play_proxy"]["hostname"] %>$request_uri;
