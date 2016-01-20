@@ -5,7 +5,7 @@ upstream my-backend {
 server {
     listen <%= node["nginx"]["play_proxy"]["http_port"] %>;
     server_name  <%= node["nginx"]["play_proxy"]["hostname"] %>;
-    return 301 https://<%= node["nginx"]["play_proxy"]["hostname"] %>$request_uri;
+#    return 301 https://<%= node["nginx"]["play_proxy"]["hostname"] %>$request_uri;
 
     location / {
         proxy_pass http://my-backend;
