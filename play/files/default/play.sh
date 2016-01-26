@@ -6,11 +6,11 @@
 
 IP_ADDRESS=`ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1`
 
-APP=play-app
+APP=api
 APP_USER=root
-APP_HOME=/home/${APP_USER}/${APP}
+APP_HOME=/var/play/${APP}
 
-CONF="-Dconfig.file=conf/application.conf -Dlogger.file=conf/logger.xml"
+CONF="-Dconfig.file=conf/env/prd.conf"
 
 MEM="-J-Xms1024M -J-Xmx1024M -XX:MaxPermSize=256m -XX:PermSize=256m"
 
@@ -41,7 +41,7 @@ RETVAL=0
 
 start(){
     echo  "starting ${prog}:"
-    su - $APP_USER -c "cd $Dir; ./bin/${APP} $JAVA_OPTIONS &"
+    su - $APP_USER -c "cd ${APP_HOME}; ./bin/${APP} ${CONF} &"
     RETVAL=$?
     echo
     [ $RETVAL = 0 ] && touch ${lockfile}
