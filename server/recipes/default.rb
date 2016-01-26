@@ -17,3 +17,12 @@ directory "/var/play" do
   mode 0755
   action :create
 end
+
+# for CodeDeploy
+execute "CodeDeploy install" do
+  command  <<-EOH
+    aws s3 cp s3://aws-codedeploy-ap-northeast-1/latest/install . --region ap-northeast-1
+    chmod +x ./install
+    sudo ./install auto
+  EOH
+end
