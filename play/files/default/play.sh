@@ -51,11 +51,15 @@ start(){
 }
 
 stop(){
-    kill $(cat ${pidfile})
 #    killproc -p ${pidfile} ${prog} -QUIT
-    RETVAL=$?
-    echo
-    [ $RETVAL = 0 ] && rm -f ${lockfile} ${pidfile}
+    if [ -e ${pidfile} ]; then
+      kill $(cat ${pidfile})
+      RETVAL=$?
+      echo
+      [ $RETVAL = 0 ] && rm -f ${pidfile}
+    else
+      return $RETVAL
+    fi
 }
 
 status(){
