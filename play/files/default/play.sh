@@ -7,7 +7,7 @@
 IP_ADDRESS=`ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1`
 
 APP=api
-APP_USER=root
+APP_USER=rl_app
 APP_HOME=/var/play/${APP}
 
 CONF="-Dconfig.file=conf/env/prd.conf"
@@ -35,7 +35,7 @@ JAVA_OPTIONS="$CONF $MEM $GC $HEAPDUMP $JMX $HEAPSTATS"
 . /etc/rc.d/init.d/functions
 
 prog=$(basename $APP)
-lockfile=${LOCKFILE-/var/lock/subsys/${APP_NAME}}
+lockfile=/var/lock/subsys/${APP_NAME}
 pidfile=${APP_HOME}/RUNNING_PID
 RETVAL=0
 
