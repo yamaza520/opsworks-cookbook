@@ -1,5 +1,6 @@
 #!/bin/sh
 # http://qiita.com/n_slender/items/ca17a1389446b650b3d4
+# https://www.playframework.com/documentation/2.4.x/ProductionConfiguration
 # chkconfig:345 99 1
 # description: play-app
 # processname: $APP
@@ -9,8 +10,10 @@ IP_ADDRESS=`ip -f inet -o addr show eth0|cut -d\  -f 7 | cut -d/ -f 1`
 APP=api
 APP_USER=rl_app
 APP_HOME=/var/play/${APP}
+pidfile=${APP_HOME}/RUNNING_PID
 
 CONF="-Dconfig.file=conf/env/prd.conf"
+PID="-Dpidfile.path=${pidfile}"
 
 MEM="-J-Xms1024M -J-Xmx1024M -XX:MaxPermSize=256m -XX:PermSize=256m"
 
@@ -36,12 +39,11 @@ JAVA_OPTIONS="$CONF $MEM $GC $HEAPDUMP $JMX $HEAPSTATS"
 
 prog=$(basename $APP)
 lockfile=/var/lock/subsys/${APP_NAME}
-pidfile=${APP_HOME}/RUNNING_PID
 RETVAL=0
 
 start(){
     echo  "starting ${prog}:"
-    su - $APP_USER -c "cd ${APP_HOME}; ./bin/${APP} ${CONF} &"
+    su - $APP_USER -c "cd ${APP_HOME}; ./bin/${APP} ${CONF} ${PID} &"
     RETVAL=$?
     echo
     [ $RETVAL = 0 ] && touch ${lockfile}
@@ -49,7 +51,8 @@ start(){
 }
 
 stop(){
-    killproc -p ${pidfile} ${prog} -QUIT
+    kill $(cat ${pidfile})
+#    killproc -p ${pidfile} ${prog} -QUIT
     RETVAL=$?
     echo
     [ $RETVAL = 0 ] && rm -f ${lockfile} ${pidfile}
