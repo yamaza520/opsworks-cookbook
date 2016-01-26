@@ -15,5 +15,5 @@ directory "/var/play" do
   group "wheel"
   recursive true
   mode 0755
-  action :create_if_missing
+  action :nothing
 end
